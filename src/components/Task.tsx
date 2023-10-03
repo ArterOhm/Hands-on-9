@@ -1,9 +1,19 @@
+import { TaskDTO } from '../types/dto'
 import classes from './Task.module.css'
 
-const Task = () => {
+interface ITaskDTO {
+  task: TaskDTO
+  handleToggle: (index: number) => void
+  handleDEL: (index: number) => void
+  idx: number
+}
+
+const Task = ({ task, handleToggle, handleDEL, idx }: ITaskDTO) => {
+  const { todo, isDone } = task
+
   return (
-    <div className={classes.card}>
-      <p>RENDER TODO HERE</p>
+    <div className={isDone ? `${classes.card} ${classes.completed}` : classes.card}>
+      <p onClick={() => handleToggle(idx)}>{todo}</p>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -11,7 +21,7 @@ const Task = () => {
         strokeWidth={1.5}
         stroke="currentColor"
         className={classes.delete}
-        // onClick={}
+        onClick={() => handleDEL(idx)}
       >
         <path
           strokeLinecap="round"
